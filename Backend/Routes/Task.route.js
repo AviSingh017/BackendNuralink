@@ -1,7 +1,7 @@
 const express = require("express");
 const { user_Task } = require("../Model/Task.model");
 const task = express.Router();
-const socket=require("../Socket/socket");
+// const socket=require("../Socket/socket");
 
 task.post("/create_Task", async (req, res) => {
   console.log(req.body);
@@ -31,7 +31,6 @@ task.post("/create_Task", async (req, res) => {
     });
 
     await task.save();
-    socket.emit("taskCreated",`New task has been created by ${username}`);
     return res.status(200).send({ message: "Task Added Successfully" });
   } catch (error) {
     return res.status(400).send({ message: error.message });
@@ -98,7 +97,7 @@ task.patch("/update_task/:id", async (req, res) => {
     task.status = !task.status;
     await task.save();
     
-    socket.emit("taskCreated",`New task has been updated as ${task.status?"Completed":"Pending"} by ${task.name}`);
+    // socket.emit("taskCreated",`New task has been updated as ${task.status?"Completed":"Pending"} by ${task.name}`);
 
     return res.status(200).send({
       message: "Task status updated successfully",
